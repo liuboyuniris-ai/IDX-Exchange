@@ -39,15 +39,15 @@ after_numeric_count = len(df_clean)
 print("Performing date consistency checks...")
 
 # Flag: Listing happens after the sale is already closed
-df_clean['listing_after_close_flag'] = df_clean['ListingContractDate'] > df_clean['CloseDate']
+df_clean['listing_after_close_flag'] = df_clean['ListingContractDate'] >= df_clean['CloseDate']
 
 # Flag: Contract is signed after the sale is already closed
-df_clean['purchase_after_close_flag'] = df_clean['PurchaseContractDate'] > df_clean['CloseDate']
+df_clean['purchase_after_close_flag'] = df_clean['PurchaseContractDate'] >= df_clean['CloseDate']
 
 # Flag: Any timeline violation (Listing > Purchase OR Purchase > Close)
 df_clean['negative_timeline_flag'] = (
-    (df_clean['ListingContractDate'] > df_clean['PurchaseContractDate']) | 
-    (df_clean['PurchaseContractDate'] > df_clean['CloseDate'])
+    (df_clean['ListingContractDate'] >= df_clean['PurchaseContractDate']) | 
+    (df_clean['PurchaseContractDate'] >= df_clean['CloseDate'])
 )
 
 # 5. Geographic Data Quality Checks (California Specific)
